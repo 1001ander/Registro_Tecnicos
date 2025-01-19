@@ -5,7 +5,7 @@ namespace RegistroTecnicos.Models
     public class Tecnicos
     {
         [Key]
-        public int TecnicosId { get; set; }
+        public int TecnicoId { get; set; }
 
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "solo se permiten letras ")]
         [Required(ErrorMessage = "Campo nombres obligatorios")]
@@ -15,7 +15,8 @@ namespace RegistroTecnicos.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "ingrese un valor mayor a 0")]
         [Required(ErrorMessage = "Campo sueldo obligatorio")]
 
-        public double SueldoHoras { get; set; }
+        public double SueldoHora { get; set; }
 
+      
     }
 }

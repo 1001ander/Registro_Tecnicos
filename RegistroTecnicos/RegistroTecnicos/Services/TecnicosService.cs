@@ -12,7 +12,7 @@ namespace RegistroTecnicos.Services
     {
         public async Task<bool> Guardar(Tecnicos tecnicos)
         {
-            if (!await Existe(tecnicos.TecnicosId))
+            if (!await Existe(tecnicos.TecnicoId))
                 return await Insertar(tecnicos);
             else
                 return await Modificar(tecnicos);
@@ -22,7 +22,7 @@ namespace RegistroTecnicos.Services
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Tecnicos
-                .AnyAsync(t => t.TecnicosId == tecnicosId);
+                .AnyAsync(t => t.TecnicoId == tecnicosId);
         }
 
         private async Task<bool> Insertar(Tecnicos tecnicos)
@@ -44,14 +44,14 @@ namespace RegistroTecnicos.Services
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Tecnicos
-                .FirstOrDefaultAsync(t => t.TecnicosId == tecnicosId);
+                .FirstOrDefaultAsync(t => t.TecnicoId == tecnicosId);
         }
 
         public async Task<bool> Eliminar(int tecnicosId)
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Tecnicos
-                .Where(t => t.TecnicosId == tecnicosId)
+                .Where(t => t.TecnicoId == tecnicosId)
                 .ExecuteDeleteAsync() > 0;
 
         }
@@ -68,7 +68,7 @@ namespace RegistroTecnicos.Services
         {
             await using var contexto = await DbFactory.CreateDbContextAsync();
             return await contexto.Tecnicos
-                .AnyAsync(t => t.TecnicosId != tecnicosId &&
+                .AnyAsync(t => t.TecnicoId != tecnicosId &&
                     t.Nombres.ToLower().Equals(nombres.ToLower()));
 
         }
