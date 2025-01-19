@@ -63,13 +63,13 @@
                     @foreach (var tecnico in ListaTecnicos)
                     {
                         <tr>
-                            <td> @tecnico.TecnicosId</td>
+                            <td> @tecnico.TecnicoId</td>
                             <td> @tecnico.Nombres</td>
-                            <td> @tecnico.SueldoHoras</td>
+                            <td> @tecnico.SueldoHora</td>
 
                             
                             <td>
-                                <a href="/Tecnico/Edit/@tecnico.TecnicosId" class="btn btn-outline-primary bi bi-pencil-square"></a>
+                                <a href="/Tecnico/Edit/@tecnico.TecnicoId" class="btn btn-outline-primary bi bi-pencil-square"></a>
                             </td>
                         </tr>
                     }
@@ -93,7 +93,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListaTecnicos = await tecnicosService.Listar(t => t.TecnicosId > 0);
+        ListaTecnicos = await tecnicosService.Listar(t => t.TecnicoId > 0);
     }
 
     private async Task Buscar()
@@ -102,7 +102,7 @@
         {
             if (Filtro == "Id" && int.TryParse(ValorFiltro, out int tecnicoId))
             {
-                ListaTecnicos = await tecnicosService.Listar(t => t.TecnicosId == tecnicoId);
+                ListaTecnicos = await tecnicosService.Listar(t => t.TecnicoId == tecnicoId);
 
             }
             else if  (Filtro == "Nombres")
@@ -115,7 +115,7 @@
             
         }
         else
-            ListaTecnicos = await tecnicosService.Listar(t => t.TecnicosId > 0);
+            ListaTecnicos = await tecnicosService.Listar(t => t.TecnicoId > 0);
     }
 
     
