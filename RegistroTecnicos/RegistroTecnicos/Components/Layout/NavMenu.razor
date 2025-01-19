@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">RegistroTecnicos</a>
+        <a class="navbar-brand" href="/">RegistroTecnicos</a>
     </div>
 </div>
 
@@ -8,23 +8,19 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
+        <!-- Enlace al Home -->
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Tecnico/Index">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Inicio
             </NavLink>
         </div>
 
+        <!-- Enlace al Registro de Técnicos -->
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            <NavLink class="nav-link" href="/Tecnico/Index">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Registro de Técnicos
             </NavLink>
         </div>
-       
     </nav>
 </div>
 
