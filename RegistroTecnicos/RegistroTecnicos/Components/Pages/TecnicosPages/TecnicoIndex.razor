@@ -8,10 +8,11 @@
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0">Consulta de Técnicos</h5>
+            <h5 class="card-title mb-0">Consulta de T&eacute;cnicos</h5>
             <a href="/Tecnico/Create" class="btn btn-success d-flex align-items-center">
                 <span class="bi bi-plus-circle me-2"></span> Crear
             </a>
+
         </div>
 
         <div class="card-body">
@@ -27,12 +28,13 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label class="col-form-label"><strong>Búsqueda:</strong></label>
+                    <label class="col-form-label"><strong>B&uacute;squeda:</strong></label>
                     <div class="input-group">
                         <input class="form-control" @bind="ValorFiltro" placeholder="Ingrese su búsqueda" />
                         <button type="button" class="btn btn-primary" @onclick="Buscar">
                             <span class="bi bi-search"></span> Buscar
                         </button>
+                            
                     </div>
                 </div>
             </div>
