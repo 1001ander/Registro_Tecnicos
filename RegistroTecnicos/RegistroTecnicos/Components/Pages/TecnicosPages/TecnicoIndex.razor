@@ -9,11 +9,9 @@
     <div class="card shadow-lg">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Consulta de T&eacute;cnicos</h5>
-            <a href="/Tecnico/Create" class="btn btn-success d-flex align-items-center justify-content-center">
+            <a href="/Tecnico/Create" class="btn btn-success">
                 <i class="bi bi-plus-circle me-2"></i> Crear
             </a>
-
-
         </div>
 
         <div class="card-body">
@@ -33,9 +31,8 @@
                     <div class="input-group">
                         <input class="form-control" @bind="ValorFiltro" placeholder="Ingrese su búsqueda" />
                         <button type="button" class="btn btn-primary" @onclick="Buscar">
-                            <span class="bi bi-search"></span> Buscar
+                            <i class="bi bi-search"></i> Buscar
                         </button>
-                            
                     </div>
                 </div>
             </div>
@@ -61,16 +58,13 @@
                                 <td>@tecnico.Nombres</td>
                                 <td>@tecnico.SueldoHora</td>
                                 <td>
-                                <td>
-                                    <a href="/Tecnico/Edit/@tecnico.TecnicoId" class="btn btn-success d-flex align-items-center justify-content-center">
+                                    <a href="/Tecnico/Edit/@tecnico.TecnicoId" class="btn btn-success">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
-
-                                </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-danger">
-                                        <span class="bi bi-trash"></span>
+                                    <button type="button" class="btn btn-outline-danger" @onclick="() => EliminarTecnico(tecnico.TecnicoId)">
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -89,7 +83,6 @@
         <div class="card-footer text-start">
             <label><strong>Cantidad de técnicos:</strong> @ListaTecnicos.Count()</label>
         </div>
-
     </div>
 </div>
 
@@ -122,6 +115,15 @@
         else
         {
             ListaTecnicos = await tecnicosService.Listar(t => t.TecnicoId > 0);
+        }
+    }
+
+    private async Task EliminarTecnico(int tecnicoId)
+    {
+        var confirmado = await tecnicosService.Eliminar(tecnicoId);
+        if (confirmado)
+        {
+            ListaTecnicos.RemoveAll(t => t.TecnicoId == tecnicoId);
         }
     }
 }
