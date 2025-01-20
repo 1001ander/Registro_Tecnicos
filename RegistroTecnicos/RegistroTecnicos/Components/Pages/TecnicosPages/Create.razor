@@ -1,0 +1,67 @@
+﻿@page "/Tecnico/Create"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@inject TecnicosService tecnicosService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Crear Técnico</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">Crear un nuevo Técnico</h5>
+        </div>
+
+        <div class="card-body">
+            <EditForm Model="Tecnico" OnValidSubmit="Guardar">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <!-- Campo de Nombres -->
+                <div class="mb-3">
+                    <label for="nombres" class="form-label"><strong>Nombres</strong></label>
+                    <InputText id="nombres" class="form-control" @bind-Value="Tecnico.Nombres" />
+                    <ValidationMessage For="() => Tecnico.Nombres" />
+                </div>
+
+                <!-- Campo de Sueldo por Hora -->
+                <div class="mb-3">
+                    <label for="sueldoHora" class="form-label"><strong>Sueldo por Hora</strong></label>
+                    <InputNumber id="sueldoHora" class="form-control" @bind-Value="Tecnico.SueldoHora" />
+                    <ValidationMessage For="() => Tecnico.SueldoHora" />
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" @onclick="Volver">
+                        <i class="bi bi-arrow-left-circle"></i> Volver
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    public Tecnicos Tecnico { get; set; } = new Tecnicos();
+
+    private async Task Guardar()
+    {
+        var creado = await tecnicosService.Guardar(Tecnico);
+        if (creado)
+        {
+            Navigation.NavigateTo("/Tecnico/Index");
+        }
+        else
+        {
+            // Mostrar mensaje de error (puedes usar un Toast o un mensaje en pantalla)
+        }
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/Tecnico/Index");
+    }
+}
