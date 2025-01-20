@@ -1,0 +1,103 @@
+﻿@page "/Tecnico/Edit/{TecnicoId:int}"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@inject TecnicosService tecnicosService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Editar Técnico</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">Editar Técnico</h5>
+        </div>
+
+        <div class="card-body">
+            <EditForm Model="Tecnico" OnValidSubmit="Guardar">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                @* Campo Nombre *@
+                <div class="mb-3">
+                    <label for="nombres" class="form-label"><strong>Nombres</strong></label>
+                    <InputText id="nombres" class="form-control" @bind-Value="Tecnico.Nombres" />
+                    <ValidationMessage For="() => Tecnico.Nombres" />
+                </div>
+
+                @* Campo Sueldo por Hora *@
+                <div class="mb-3">
+                    <label for="sueldoHora" class="form-label"><strong>Sueldo por Hora</strong></label>
+                    <InputNumber id="sueldoHora" class="form-control" @bind-Value="Tecnico.SueldoHora" />
+                    <ValidationMessage For="() => Tecnico.SueldoHora" />
+                </div>
+
+                @* Mensajes *@
+                @if (!string.IsNullOrEmpty(Message))
+                {
+                    <div class="alert @AlertClass mt-3">@Message</div>
+                }
+
+                @* Botones *@
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" @onclick="Volver">
+                        <i class="bi bi-arrow-left-circle"></i> Volver
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int TecnicoId { get; set; }
+
+    public Tecnicos Tecnico { get; set; } = new Tecnicos();
+    public string? Message { get; set; } = string.Empty;
+    public string AlertClass { get; set; } = "alert-info";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var tecnico = await tecnicosService.Buscar(TecnicoId);
+        if (tecnico != null)
+        {
+            Tecnico = tecnico;
+        }
+        else
+        {
+            Message = "Técnico no encontrado.";
+            AlertClass = "alert-danger";
+        }
+    }
+
+    private async Task Guardar()
+    {
+        if (await tecnicosService.ExisteTecnico(Tecnico.TecnicoId, Tecnico.Nombres))
+        {
+            Message = "Ya existe un técnico con este nombre.";
+            AlertClass = "alert-warning";
+            return;
+        }
+
+        var actualizado = await tecnicosService.Guardar(Tecnico);
+        if (actualizado)
+        {
+            Message = "Técnico actualizado con éxito.";
+            AlertClass = "alert-success";
+            Navigation.NavigateTo("/Tecnico/Index");
+        }
+        else
+        {
+            Message = "Error al actualizar el técnico.";
+            AlertClass = "alert-danger";
+        }
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/Tecnico/Index");
+    }
+}
