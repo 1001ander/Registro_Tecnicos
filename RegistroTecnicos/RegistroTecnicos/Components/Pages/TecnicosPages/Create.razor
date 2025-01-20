@@ -9,7 +9,7 @@
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header text-center">
-            <h5 class="card-title mb-0">Crear un nuevo Técnico</h5>
+            <h5 class="card-title mb-0">Crear un nuevo T&eacute;cnico</h5>
         </div>
 
         <div class="card-body">
@@ -17,20 +17,20 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
-                <!-- Campo de Nombres -->
+                @*Campo Nombre*@
                 <div class="mb-3">
                     <label for="nombres" class="form-label"><strong>Nombres</strong></label>
                     <InputText id="nombres" class="form-control" @bind-Value="Tecnico.Nombres" />
                     <ValidationMessage For="() => Tecnico.Nombres" />
                 </div>
 
-                <!-- Campo de Sueldo por Hora -->
+                @* Campo de Sueldo por Hora *@
                 <div class="mb-3">
                     <label for="sueldoHora" class="form-label"><strong>Sueldo por Hora</strong></label>
                     <InputNumber id="sueldoHora" class="form-control" @bind-Value="Tecnico.SueldoHora" />
                     <ValidationMessage For="() => Tecnico.SueldoHora" />
                 </div>
-
+                @*footer*@
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary" @onclick="Volver">
                         <i class="bi bi-arrow-left-circle"></i> Volver
@@ -56,7 +56,7 @@
         }
         else
         {
-            // Mostrar mensaje de error (puedes usar un Toast o un mensaje en pantalla)
+            
         }
     }
 
