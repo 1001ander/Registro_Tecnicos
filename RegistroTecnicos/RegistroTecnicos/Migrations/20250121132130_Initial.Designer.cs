@@ -11,7 +11,7 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250119183431_Initial")]
+    [Migration("20250121132130_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,20 +26,20 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("TecnicosId")
+                    b.Property<int>("TecnicoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicosId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SueldoHoras")
+                    b.Property<double>("SueldoHora")
                         .HasColumnType("float");
 
-                    b.HasKey("TecnicosId");
+                    b.HasKey("TecnicoId");
 
                     b.ToTable("Tecnicos");
                 });
