@@ -1,0 +1,77 @@
+﻿@page "/Tecnico/Create"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@inject TecnicosService tecnicosService
+@inject NavigationManager navigation
+@rendermode InteractiveServer
+
+<PageTitle>Crear Técnico</PageTitle>
+
+<div class="container card shadow-lg">
+    <div class="card-header text-center bi bi-person-badge">
+        <h3><strong>Crear Técnico</strong></h3>
+    </div>
+
+    <EditForm Model="tecnico" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="Nombres" class="form-label"><strong>Nombres</strong></label>
+                    <InputText id="Nombres" class="form-control" @bind-Value="tecnico.Nombres" />
+                    <ValidationMessage For="@(() => tecnico.Nombres)" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="SueldoHora" class="form-label"><strong>Sueldo por Hora</strong></label>
+                    <InputNumber id="SueldoHora" class="form-control" @bind-Value="tecnico.SueldoHora" />
+                    <ValidationMessage For="@(() => tecnico.SueldoHora)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-end">
+            <button type="submit" class="btn btn-success bi bi-save"> Guardar</button>
+            <button type="button" class="btn btn-secondary bi bi-arrow-left ms-2" @onclick="Cancelar"> Cancelar</button>
+        </div>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger mt-3">
+            <strong>Error:</strong> @ErrorMessage
+        </div>
+    }
+</div>
+
+@code {
+    private Tecnicos tecnico = new Tecnicos();
+    private string ErrorMessage { get; set; }
+
+    private async Task Guardar()
+    {
+        try
+        {
+            var guardado = await tecnicosService.Guardar(tecnico);
+            if (guardado)
+            {
+                navigation.NavigateTo("/Tecnico/Index");
+            }
+            else
+            {
+                ErrorMessage = "Hubo un error al guardar el técnico.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigation.NavigateTo("/Tecnico/Index");
+    }
+}
