@@ -41,7 +41,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="rnc" class="form-label"><strong>RNC:</strong></label>
-                    <InputNumber id="rnc" class="form-control" @bind-Value="nuevoCliente.Rnc" />
+                    <InputText id="rnc" class="form-control" @bind-Value="nuevoCliente.Rnc" />
                     <ValidationMessage For="@(() => nuevoCliente.Rnc)" />
                 </div>
 
@@ -62,14 +62,14 @@
                 <div class="col-md-6">
                     <label for="tecnico" class="form-label"><strong>Técnico Encargado:</strong></label>
                     <InputSelect id="tecnico" class="form-select" @bind-Value="nuevoCliente.TecnicosId">
-                        <option value="" disabled>Seleccionar Técnico</option>
-                        @if (tecnicos != null && tecnicos.Any())
-                        {
+                        <option value="0" disabled>Seleccionar Técnico</option>
+                        
+                        
                             @foreach (var tecnico in tecnicos)
                             {
-                                <option value="@tecnico.TecnicoId">@tecnico.Nombres</option>
+                                <option value="@tecnico.TecnicosId">@tecnico.Nombres</option>
                             }
-                        }
+                        
                     </InputSelect>
                     <ValidationMessage For="@(() => nuevoCliente.TecnicosId)" />
                 </div>

@@ -4,6 +4,7 @@
 @rendermode InteractiveServer
 @inject ClientesService clienteService
 @inject NavigationManager navigation
+@inject TecnicosService tecnicosService
 
 <PageTitle>Clientes</PageTitle>
 <div class="container card shadow-lg">
@@ -61,8 +62,8 @@
                         <td class="text-center">@cliente.Nombres</td>
                         <td class="text-center">@cliente.Direccion</td>
                         <td class="text-center">@cliente.Rnc</td>
-                        <td class="text-center">@cliente.LimiteCredito:C</td>
-                        <td class="text-center">@cliente.Tecnicos?.Nombres</td>
+                        <td class="text-center">@cliente.LimiteCredito</td>
+                        <td class="text-center">@cliente.Tecnicos.Nombres</td>
                         <td class="text-center">
                             <a href="/Clientes/Edit/@cliente.ClienteId" class="btn btn-outline-warning bi bi-pencil-square"></a>
                         </td>
@@ -80,14 +81,18 @@
 </div>
 
 @code {
-    private List<Clientes> clientes = new();
+
+    private List<Tecnicos> tecnicos = new List<Tecnicos>();
+    private List<Clientes> clientes = new List<Clientes>(); 
     private string filtro { get; set; } = "ClienteId";
     private string ValorFiltro { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
+
+        tecnicos = await tecnicosService.Listar(t => true);
         clientes = await clienteService.Listar(c => true); // Cargar clientes con técnicos asociados.
-    }
+    }   
 
     private async Task Buscar()
     {
@@ -101,9 +106,9 @@
             {
                 clientes = await clienteService.Listar(c => c.Nombres.Contains(ValorFiltro, StringComparison.OrdinalIgnoreCase));
             }
-            else if (filtro == "Rnc" && int.TryParse(ValorFiltro, out int rnc))
+            else if (filtro == "Rnc" )
             {
-                clientes = await clienteService.Listar(c => c.Rnc == rnc);
+                clientes = await clienteService.Listar(c => c.Rnc.Contains(ValorFiltro, StringComparison.OrdinalIgnoreCase));
             }
         }
     }
