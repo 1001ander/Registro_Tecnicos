@@ -22,7 +22,7 @@ public class Clientes
     [StringLength(11, ErrorMessage = "El RNC No Puede Tener Mas De 11 Numeros")]
     [RegularExpression(@"[0-9]+$", ErrorMessage = "Solo Se Permiten Numeros")]
     [Required(ErrorMessage = "Campo RNC Obligatorio")]
-    public int Rnc { get; set; }
+    public string Rnc { get; set; }
 
     [RegularExpression(@"[0-9]+$", ErrorMessage = "Solo Se Permiten Numeros")]
     [Required(ErrorMessage = "Campo Limite De Credito Obligatorio")]

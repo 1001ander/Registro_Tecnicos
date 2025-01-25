@@ -5,7 +5,7 @@ namespace RegistroTecnicos.Models;
 public class Tecnicos
 {
     [Key]
-    public int TecnicoId { get; set; }
+    public int TecnicosId { get; set; }
 
     [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "solo se permiten letras ")]
     [Required(ErrorMessage = "Campo nombres obligatorios")]
