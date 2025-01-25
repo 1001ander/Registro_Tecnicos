@@ -73,6 +73,7 @@ public class ClientesService
     {
         await using var contexto = await DbFactory.CreateDbContextAsync();
         return await contexto.Clientes
+            .Include(t => t.Tecnicos)
             .Where(criterio)
             .ToListAsync();
     }
