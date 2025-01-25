@@ -1,0 +1,94 @@
+﻿@page "/Tecnico/Delete/{TecnicoId:int}"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@inject TecnicosService tecnicosService
+@inject NavigationManager navigation
+
+<PageTitle>Eliminar Técnico</PageTitle>
+
+<div class="container card shadow-lg">
+    <div class="card-header text-center bi bi-trash">
+        <h3><strong>Eliminar Técnico</strong></h3>
+    </div>
+
+    @if (tecnico != null)
+    {
+        <div class="card-body">
+            <p>¿Estás seguro de que deseas eliminar al siguiente técnico?</p>
+            <ul>
+                <li><strong>ID:</strong> @tecnico.TecnicoId</li>
+                <li><strong>Nombre:</strong> @tecnico.Nombres</li>
+                <li><strong>Sueldo por Hora:</strong> @tecnico.SueldoHora</li>
+            </ul>
+        </div>
+
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-danger bi bi-trash" @onclick="ConfirmarEliminar"> Eliminar</button>
+            <button class="btn btn-secondary bi bi-arrow-left ms-2" @onclick="Cancelar"> Cancelar</button>
+        </div>
+    }
+    else if (errorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+        <button class="btn btn-secondary" @onclick="Cancelar">Regresar</button>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Cargando información del técnico...
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int TecnicoId { get; set; }
+
+    private Tecnicos? tecnico;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            tecnico = await tecnicosService.Buscar(TecnicoId);
+
+            if (tecnico == null)
+            {
+                errorMessage = "El técnico solicitado no existe o ya ha sido eliminado.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar el técnico: {ex.Message}";
+        }
+    }
+
+    private async Task ConfirmarEliminar()
+    {
+        try
+        {
+            bool eliminado = await tecnicosService.Eliminar(TecnicoId);
+
+            if (eliminado)
+            {
+                navigation.NavigateTo("/Tecnico/Index");
+            }
+            else
+            {
+                errorMessage = "No se pudo eliminar el técnico. Inténtalo de nuevo.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ocurrió un error al intentar eliminar el técnico: {ex.Message}";
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigation.NavigateTo("/Tecnico/Index");
+    }
+}
