@@ -1,4 +1,4 @@
-﻿@page "/Tecnico/Delete/{TecnicoId:int}"
+﻿@page "/Tecnico/Delete/{TecnicosId:int}"
 @using RegistroTecnicos.Models
 @using RegistroTecnicos.Services
 @inject TecnicosService tecnicosService
@@ -16,7 +16,7 @@
         <div class="card-body">
             <p>¿Estás seguro de que deseas eliminar al siguiente técnico?</p>
             <ul>
-                <li><strong>ID:</strong> @tecnico.TecnicoId</li>
+                <li><strong>ID:</strong> @tecnico.TecnicosId</li>
                 <li><strong>Nombre:</strong> @tecnico.Nombres</li>
                 <li><strong>Sueldo por Hora:</strong> @tecnico.SueldoHora</li>
             </ul>
