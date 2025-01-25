@@ -44,9 +44,10 @@ namespace RegistroTecnicos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rnc")
+                    b.Property<string>("Rnc")
+                        .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int>("TecnicosId")
                         .HasColumnType("int");
@@ -60,11 +61,11 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("TecnicoId")
+                    b.Property<int>("TecnicosId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicosId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
@@ -73,7 +74,7 @@ namespace RegistroTecnicos.Migrations
                     b.Property<double>("SueldoHora")
                         .HasColumnType("float");
 
-                    b.HasKey("TecnicoId");
+                    b.HasKey("TecnicosId");
 
                     b.ToTable("Tecnicos");
                 });

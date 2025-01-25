@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RegistroTecnicos.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Mejoratecnico : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,14 @@ namespace RegistroTecnicos.Migrations
                 name: "Tecnicos",
                 columns: table => new
                 {
-                    TecnicoId = table.Column<int>(type: "int", nullable: false)
+                    TecnicosId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SueldoHora = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tecnicos", x => x.TecnicoId);
+                    table.PrimaryKey("PK_Tecnicos", x => x.TecnicosId);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +34,7 @@ namespace RegistroTecnicos.Migrations
                     Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Rnc = table.Column<int>(type: "int", maxLength: 11, nullable: false),
+                    Rnc = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     LimiteCredito = table.Column<double>(type: "float", nullable: false),
                     TecnicosId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -45,7 +45,7 @@ namespace RegistroTecnicos.Migrations
                         name: "FK_Clientes_Tecnicos_TecnicosId",
                         column: x => x.TecnicosId,
                         principalTable: "Tecnicos",
-                        principalColumn: "TecnicoId",
+                        principalColumn: "TecnicosId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
