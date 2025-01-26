@@ -1,22 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RegistroTecnicos.Models
+namespace RegistroTecnicos.Models;
+
+public class Tecnicos
 {
-    public class Tecnicos
-    {
-        [Key]
-        public int TecnicoId { get; set; }
+    [Key]
+    public int TecnicosId { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "solo se permiten letras ")]
-        [Required(ErrorMessage = "Campo nombres obligatorios")]
+    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "solo se permiten letras ")]
+    [Required(ErrorMessage = "Campo nombres obligatorios")]
 
-        public string? Nombres { get; set; }
+    public string? Nombres { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "ingrese un valor mayor a 0")]
-        [Required(ErrorMessage = "Campo sueldo obligatorio")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "ingrese un valor mayor a 0")]
+    [Required(ErrorMessage = "Campo sueldo obligatorio")]
 
-        public double SueldoHora { get; set; }
+    public double SueldoHora { get; set; }
 
-      
-    }
+  
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroTecnicos.DAL;
 
@@ -11,9 +12,11 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20250125212025_Mejora tecnico")]
+    partial class Mejoratecnico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,11 +64,11 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("TecnicoId")
+                    b.Property<int>("TecnicosId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicosId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
@@ -74,7 +77,7 @@ namespace RegistroTecnicos.Migrations
                     b.Property<double>("SueldoHora")
                         .HasColumnType("float");
 
-                    b.HasKey("TecnicoId");
+                    b.HasKey("TecnicosId");
 
                     b.ToTable("Tecnicos");
                 });

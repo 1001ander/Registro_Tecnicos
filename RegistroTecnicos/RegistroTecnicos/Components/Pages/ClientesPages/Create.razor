@@ -1,0 +1,133 @@
+﻿@page "/Clientes/Create"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@rendermode InteractiveServer
+@inject ClientesService clienteService
+@inject TecnicosService tecnicoService
+@inject NavigationManager navigation
+
+<PageTitle>Crear Cliente</PageTitle>
+
+<div class="container card shadow-lg">
+    <div class="card-header text-center">
+        <h3><strong>Registrar Cliente</strong></h3>
+    </div>
+    <div class="card-body">
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                @ErrorMessage
+            </div>
+        }
+
+        <EditForm Model="@nuevoCliente" OnValidSubmit="Guardar">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nombres" class="form-label"><strong>Nombre del Cliente:</strong></label>
+                    <InputText id="nombres" class="form-control" @bind-Value="nuevoCliente.Nombres" />
+                    <ValidationMessage For="@(() => nuevoCliente.Nombres)" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="direccion" class="form-label"><strong>Dirección:</strong></label>
+                    <InputText id="direccion" class="form-control" @bind-Value="nuevoCliente.Direccion" />
+                    <ValidationMessage For="@(() => nuevoCliente.Direccion)" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="rnc" class="form-label"><strong>RNC:</strong></label>
+                    <InputText id="rnc" class="form-control" @bind-Value="nuevoCliente.Rnc" />
+                    <ValidationMessage For="@(() => nuevoCliente.Rnc)" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="limiteCredito" class="form-label"><strong>Límite de Crédito:</strong></label>
+                    <InputNumber id="limiteCredito" class="form-control" @bind-Value="nuevoCliente.LimiteCredito" />
+                    <ValidationMessage For="@(() => nuevoCliente.LimiteCredito)" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="fechaIngreso" class="form-label"><strong>Fecha de Ingreso:</strong></label>
+                    <InputDate id="fechaIngreso" class="form-control" @bind-Value="nuevoCliente.FechaIngreso" />
+                    <ValidationMessage For="@(() => nuevoCliente.FechaIngreso)" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="tecnico" class="form-label"><strong>Técnico Encargado:</strong></label>
+                    <InputSelect id="tecnico" class="form-select" @bind-Value="nuevoCliente.TecnicosId">
+                        <option value="0" disabled>Seleccionar Técnico</option>
+                        
+                        
+                            @foreach (var tecnico in tecnicos)
+                            {
+                                <option value="@tecnico.TecnicosId">@tecnico.Nombres</option>
+                            }
+                        
+                    </InputSelect>
+                    <ValidationMessage For="@(() => nuevoCliente.TecnicosId)" />
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success me-2">
+                    <span class="bi bi-save"></span> Guardar
+                </button>
+                <button type="button" class="btn btn-secondary" @onclick="Cancelar">
+                    <span class="bi bi-x-circle"></span> Cancelar
+                </button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Clientes nuevoCliente = new Clientes();
+    private List<Tecnicos> tecnicos = new List<Tecnicos>();
+    private string ErrorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            tecnicos = await tecnicoService.Listar(t => true); // Cargar técnicos
+            nuevoCliente.FechaIngreso = DateTime.Now; // Fecha por defecto
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Error al cargar los técnicos. Por favor, intente más tarde.";
+        }
+    }
+
+    private async Task Guardar()
+    {
+        try
+        {
+            ErrorMessage = string.Empty; // Limpiar mensaje previo
+            var creado = await clienteService.Guardar(nuevoCliente);
+            if (creado)
+            {
+                navigation.NavigateTo("/Clientes/Index");
+            }
+            else
+            {
+                ErrorMessage = "No se pudo guardar el cliente. Por favor, intente nuevamente.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Ocurrió un error al guardar el cliente. Verifique los datos e intente de nuevo.";
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigation.NavigateTo("/Clientes/Index");
+    }
+}

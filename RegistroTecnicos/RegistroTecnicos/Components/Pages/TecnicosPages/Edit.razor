@@ -1,4 +1,4 @@
-﻿@page "/Tecnico/Edit/{TecnicoId:int}"
+﻿@page "/Tecnico/Edit/{TecnicosId:int}"
 @using RegistroTecnicos.Models
 @using RegistroTecnicos.Services
 @inject TecnicosService tecnicosService
@@ -75,7 +75,7 @@
 
     private async Task Guardar()
     {
-        if (await tecnicosService.ExisteTecnico(Tecnico.TecnicoId, Tecnico.Nombres))
+        if (await tecnicosService.ExisteTecnico(Tecnico.TecnicosId, Tecnico.Nombres))
         {
             Message = "Ya existe un técnico con este nombre.";
             AlertClass = "alert-warning";

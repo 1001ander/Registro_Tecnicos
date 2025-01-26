@@ -1,0 +1,76 @@
+﻿@page "/Tecnico/Delete/{TecnicosId:int}"
+@using RegistroTecnicos.Models
+@using RegistroTecnicos.Services
+@inject TecnicosService tecnicosService
+@inject NavigationManager navigation
+@rendermode InteractiveServer
+
+<PageTitle>Eliminar Técnico</PageTitle>
+
+<div class="container card shadow-lg">
+    <div class="card-header text-center bi bi-person-badge">
+        <h3><strong>Eliminar Técnico</strong></h3>
+    </div>
+
+    <div class="card-body text-center">
+        <h5><strong>¿Estás seguro de que deseas eliminar este técnico?</strong></h5>
+        <p>Esta acción no se puede deshacer.</p>
+
+        <div class="d-flex justify-content-center mt-4">
+            <button class="btn btn-danger me-2" @onclick="EliminarTecnico">
+                <i class="bi bi-trash"></i> Eliminar
+            </button>
+            <button class="btn btn-secondary" @onclick="Cancelar">
+                <i class="bi bi-arrow-left"></i> Cancelar
+            </button>
+        </div>
+
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="alert alert-danger mt-3">
+                <strong>Error:</strong> @ErrorMessage
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int TecnicoId { get; set; }
+    private Tecnicos tecnico;
+    private string ErrorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        tecnico = await tecnicosService.Buscar(TecnicoId);
+        if (tecnico == null)
+        {
+            navigation.NavigateTo("/Tecnico/Index");
+        }
+    }
+
+    private async Task EliminarTecnico()
+    {
+        try
+        {
+            var eliminado = await tecnicosService.Eliminar(TecnicoId);
+            if (eliminado)
+            {
+                navigation.NavigateTo("/Tecnico/Index");
+            }
+            else
+            {
+                ErrorMessage = "No se pudo eliminar el técnico.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigation.NavigateTo("/Tecnico/Index");
+    }
+}
