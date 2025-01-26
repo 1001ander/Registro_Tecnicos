@@ -61,11 +61,11 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("TecnicosId")
+                    b.Property<int>("TecnicoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicosId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
@@ -74,7 +74,7 @@ namespace RegistroTecnicos.Migrations
                     b.Property<double>("SueldoHora")
                         .HasColumnType("float");
 
-                    b.HasKey("TecnicosId");
+                    b.HasKey("TecnicoId");
 
                     b.ToTable("Tecnicos");
                 });
